@@ -1,0 +1,340 @@
+{
+  "operator": {
+    "placesCount": 266,
+    "operatorId": 7429489,
+    "operatorName": "WVV",
+    "amountStations": 266,
+    "operatorPlaces": [
+      {
+        "name": "WVV Energie E-Ladestation",
+        "circuits": [
+          {
+            "charging": false,
+            "ready": true,
+            "_id": 1,
+            "powerInfo": "AC_022kW",
+            "plug": "TYP2",
+            "evseId": "DE*BDO*E594244984*1",
+            "status": "OCPP_AVAILABLE",
+            "isReady": true,
+            "isCharging": false,
+            "power_type": "AC",
+            "max_electric_power": 22000,
+            "latestChargingSession": {
+              "sessionId": 524004940,
+              "status": "FINISHED_CLEAN",
+              "duration": 16841655,
+              "startDate": "27.10.2026",
+              "startTime": "17:56:33",
+              "endDate": "27.10.2026",
+              "endTime": "22:37:14",
+              "idNotice": null,
+              "energy": "50877",
+              "socFirst": null,
+              "socLast": null,
+              "currentPower": "10935"
+            }
+          },
+          {
+            "charging": false,
+            "ready": true,
+            "_id": 2,
+            "powerInfo": "AC_022kW",
+            "plug": "TYP2",
+            "evseId": "DE*BDO*E594244984*2",
+            "status": "OCPP_AVAILABLE",
+            "isReady": true,
+            "isCharging": false,
+            "power_type": "AC",
+            "max_electric_power": 22000,
+            "latestChargingSession": {
+              "sessionId": 524069043,
+              "status": "FINISHED_CLEAN",
+              "duration": 5497000,
+              "startDate": "29.10.2026",
+              "startTime": "08:49:46",
+              "endDate": "29.10.2026",
+              "endTime": "10:21:23",
+              "idNotice": null,
+              "energy": "16433",
+              "socFirst": null,
+              "socLast": null,
+              "currentPower": "10876"
+            }
+          }
+        ],
+        "serviceTag": "ALF_ACE0629222",
+        "description": "Im Parkhaus hinter der Schranke",
+        "address": {
+          "street": "Rüdigerstr. 3",
+          "city": "Würzburg",
+          "zipCode": "97070"
+        },
+        "shortcode": "DEPRECATED",
+        "lat": 49.795855,
+        "lon": 9.937994,
+        "status": "OK",
+        "published": true,
+        "accessibilityType": "RESTRICTED",
+        "hours": {
+          "twentyfourseven": true,
+          "regular_hours": null
+        },
+        "operatorName": "WVV"
+      },
+      {
+        "name": "WVV Energie E-Ladestation",
+        "circuits": [
+          {
+            "charging": false,
+            "ready": false,
+            "_id": 1,
+            "powerInfo": "DC_300kW",
+            "plug": "CCS",
+            "evseId": "DE*BDO*E860514571*1",
+            "status": "OCPP_UNAVAILABLE",
+            "isReady": false,
+            "isCharging": false,
+            "power_type": "DC",
+            "max_electric_power": 300000,
+            "latestChargingSession": {
+              "sessionId": 522027960,
+              "status": "FINISHED_CLEAN",
+              "duration": 82000,
+              "startDate": "05.09.2026",
+              "startTime": "08:49:39",
+              "endDate": "05.09.2026",
+              "endTime": "08:51:01",
+              "idNotice": null,
+              "energy": "0",
+              "socFirst": null,
+              "socLast": null,
+              "currentPower": null
+            }
+          },
+          {
+            "charging": true,
+            "ready": false,
+            "_id": 2,
+            "powerInfo": "DC_300kW",
+            "plug": "CCS",
+            "evseId": "DE*BDO*E860514571*2",
+            "status": "OCPP16_CHARGING",
+            "isReady": false,
+            "isCharging": true,
+            "power_type": "DC",
+            "max_electric_power": 300000,
+            "latestChargingSession": {
+              "sessionId": 524084510,
+              "status": "RUNNING",
+              "duration": 727000,
+              "startDate": "29.10.2026",
+              "startTime": "12:03:45",
+              "endDate": null,
+              "endTime": null,
+              "idNotice": "CARPOOL",
+              "energy": "13891",
+              "socFirst": 34.0,
+              "socLast": 58.0,
+              "currentPower": "71506"
+            }
+          }
+        ],
+        "serviceTag": "ALP_21BZ1059B",
+        "description": "Ladepunkt 2 (rechts) ist ausschließlich den E-Taxen vorbehalten.",
+        "address": {
+          "street": "Salvatorstraße 26",
+          "city": "Würzburg",
+          "zipCode": "97074"
+        },
+        "shortcode": "DEPRECATED",
+        "lat": 49.791594,
+        "lon": 9.953112,
+        "status": "OK",
+        "published": true,
+        "accessibilityType": "FREEPUBLIC",
+        "hours": {
+          "twentyfourseven": true,
+          "regular_hours": null
+        },
+        "operatorName": "WVV"
+      },
+      {
+        "name": "WVV Energie E-Ladestation",
+        "circuits": [
+          {
+            "charging": false,
+            "ready": false,
+            "_id": 1,
+            "powerInfo": "AC_022kW",
+            "plug": "TYP2",
+            "evseId": "DE*BDO*E670277134*1",
+            "status": "OCPP_UNAVAILABLE",
+            "isReady": false,
+            "isCharging": false,
+            "power_type": "AC",
+            "max_electric_power": 22000,
+            "latestChargingSession": {
+              "sessionId": 519098141,
+              "status": "FINISHED_CLEAN",
+              "duration": 28215,
+              "startDate": "28.05.2026",
+              "startTime": "19:20:27",
+              "endDate": "28.05.2026",
+              "endTime": "19:20:56",
+              "idNotice": null,
+              "energy": "0",
+              "socFirst": null,
+              "socLast": null,
+              "currentPower": null
+            }
+          },
+          {
+            "charging": false,
+            "ready": false,
+            "_id": 2,
+            "powerInfo": "AC_022kW",
+            "plug": "TYP2",
+            "evseId": "DE*BDO*E670277134*2",
+            "status": "OCPP_UNAVAILABLE",
+            "isReady": false,
+            "isCharging": false,
+            "power_type": "AC",
+            "max_electric_power": 22000,
+            "latestChargingSession": {
+              "sessionId": 519097899,
+              "status": "FINISHED_CLEAN",
+              "duration": 5009421,
+              "startDate": "28.05.2026",
+              "startTime": "19:07:23",
+              "endDate": "28.05.2026",
+              "endTime": "20:30:52",
+              "idNotice": "960179",
+              "energy": "14856",
+              "socFirst": null,
+              "socLast": null,
+              "currentPower": "10812"
+            }
+          }
+        ],
+        "serviceTag": "ABL_10332106",
+        "description": null,
+        "address": {
+          "street": "Bismarckstraße 13",
+          "city": "Würzburg",
+          "zipCode": "97080"
+        },
+        "shortcode": "DEPRECATED",
+        "lat": 49.80080289661714,
+        "lon": 9.92879365780246,
+        "status": "WARNING",
+        "published": true,
+        "accessibilityType": "FREEPUBLIC",
+        "hours": {
+          "twentyfourseven": true,
+          "regular_hours": null
+        },
+        "operatorName": "WVV"
+      },
+      {
+        "name": "Depot WSB Friedrich-Spee-Straße 1",
+        "circuits": [],
+        "serviceTag": "ALF_ACE0195157",
+        "description": null,
+        "address": {
+          "street": "Friedrich-Spee-Straße 58-64",
+          "city": "Würzburg",
+          "zipCode": "97072"
+        },
+        "shortcode": "DEPRECATED",
+        "lat": 49.775997,
+        "lon": 9.938008,
+        "status": "CRITICAL",
+        "published": false,
+        "accessibilityType": "RESTRICTED",
+        "hours": {
+          "twentyfourseven": false,
+          "regular_hours": null
+        },
+        "operatorName": "Würzburger Straßenbahn GmbH"
+      },
+      {
+        "name": "Place 1",
+        "circuits": [
+          {
+            "charging": false,
+            "ready": true,
+            "_id": 1,
+            "powerInfo": "AC_022kW",
+            "plug": "TYP2",
+            "evseId": "DE*BDO*E1234567*1",
+            "status": "OCPP_AVAILABLE",
+            "isReady": true,
+            "isCharging": false,
+            "power_type": "AC",
+            "max_electric_power": 22000,
+            "latestChargingSession": {
+              "sessionId": 463595892,
+              "status": "FINISHED_CLEAN",
+              "duration": 14593100,
+              "startDate": "30.04.2025",
+              "startTime": "08:14:29",
+              "endDate": "30.04.2025",
+              "endTime": "12:17:42",
+              "idNotice": "GKunde Uni Klinik Würzburg",
+              "energy": "21383",
+              "socFirst": null,
+              "socLast": null,
+              "currentPower": "0"
+            }
+          },
+          {
+            "charging": false,
+            "ready": true,
+            "_id": 2,
+            "powerInfo": "AC_022kW",
+            "plug": "TYP2",
+            "evseId": "DE*BDO*E1234567*2",
+            "status": "OCPP_AVAILABLE",
+            "isReady": true,
+            "isCharging": false,
+            "power_type": "AC",
+            "max_electric_power": 22000,
+            "latestChargingSession": {
+              "sessionId": 457317802,
+              "status": "FINISHED_CLEAN",
+              "duration": 37342185,
+              "startDate": "17.04.2025",
+              "startTime": "08:36:40",
+              "endDate": "17.04.2025",
+              "endTime": "18:59:02",
+              "idNotice": "GKunde Uni Klinik Würzburg",
+              "energy": "20940",
+              "socFirst": null,
+              "socLast": null,
+              "currentPower": "0"
+            }
+          }
+        ],
+        "serviceTag": "ABL_EMH3",
+        "description": null,
+        "address": {
+          "street": "Josef-Schneider Straße 2",
+          "city": "Würzburg",
+          "zipCode": "97080"
+        },
+        "shortcode": "DEPRECATED",
+        "lat": 49.80588,
+        "lon": 9.95884,
+        "status": "ATTENTION",
+        "published": false,
+        "accessibilityType": "RESTRICTED",
+        "hours": {
+          "twentyfourseven": true,
+          "regular_hours": null
+        },
+        "operatorName": "Universitätsklinikum Würzburg"
+      }
+    ]
+  }
+}

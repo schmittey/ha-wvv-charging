@@ -1,0 +1,90 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "WVV Charging (Würzburg)",
+        "description": "Choose how stations are selected and how often live data is refreshed.",
+        "data": {
+          "mode": "Station selection",
+          "update_interval": "Update interval"
+        }
+      },
+      "favorites": {
+        "title": "Choose stations",
+        "data": {
+          "station_ids": "Favourite stations"
+        }
+      },
+      "radius": {
+        "title": "Choose radius",
+        "description": "All published WVV stations within this distance of your Home Assistant home location will be added.",
+        "data": {
+          "radius_km": "Radius"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not reach the WVV charging API. Please try again later.",
+      "no_stations_selected": "Please select at least one station."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "WVV Charging (Würzburg)",
+        "data": {
+          "mode": "Station selection",
+          "update_interval": "Update interval"
+        }
+      },
+      "favorites": {
+        "title": "Choose stations",
+        "data": {
+          "station_ids": "Favourite stations"
+        }
+      },
+      "radius": {
+        "title": "Choose radius",
+        "data": {
+          "radius_km": "Radius"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Could not reach the WVV charging API. Please try again later.",
+      "no_stations_selected": "Please select at least one station."
+    }
+  },
+  "selector": {
+    "mode": {
+      "options": {
+        "favorites": "Pick favourite stations",
+        "radius": "All stations within a radius of home"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "free_points": {
+        "name": "Free points"
+      },
+      "status": {
+        "name": "Status",
+        "state": {
+          "available": "Available",
+          "occupied": "Occupied",
+          "out_of_order": "Out of order",
+          "unknown": "Unknown"
+        }
+      },
+      "distance": {
+        "name": "Distance from home"
+      }
+    },
+    "binary_sensor": {
+      "any_free": {
+        "name": "Point free"
+      }
+    }
+  }
+}

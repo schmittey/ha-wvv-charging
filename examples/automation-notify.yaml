@@ -1,0 +1,23 @@
+# Example automation: notify your phone as soon as a chosen WVV charging
+# station has a free charge point.
+#
+# Replace the entity_id with the "any free" binary sensor of the station
+# you care about (it's created automatically for every station you select
+# during setup).
+
+alias: "Notify me when WVV station is free"
+description: "Sends a mobile notification when a charge point becomes free."
+trigger:
+  - platform: state
+    entity_id: binary_sensor.wvv_energie_e_ladestation_rudigerstr_3_any_free
+    to: "on"
+condition: []
+action:
+  - service: notify.mobile_app_your_phone
+    data:
+      title: "WVV Ladestation frei"
+      message: >-
+        {{ state_attr('sensor.wvv_energie_e_ladestation_rudigerstr_3_free_points', 'address') }}
+        hat jetzt einen freien Ladepunkt
+        ({{ state_attr('sensor.wvv_energie_e_ladestation_rudigerstr_3_free_points', 'free_of_total') }}).
+mode: single

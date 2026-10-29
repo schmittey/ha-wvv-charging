@@ -1,0 +1,12 @@
+{
+  "domain": "wvv_charging",
+  "name": "WVV Charging (Würzburg)",
+  "codeowners": ["@schmittey"],
+  "config_flow": true,
+  "documentation": "https://github.com/schmittey/ha-wvv-charging",
+  "issue_tracker": "https://github.com/schmittey/ha-wvv-charging/issues",
+  "iot_class": "cloud_polling",
+  "integration_type": "service",
+  "requirements": [],
+  "version": "1.0.0"
+}

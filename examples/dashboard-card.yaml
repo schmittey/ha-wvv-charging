@@ -1,0 +1,19 @@
+# Example Lovelace dashboard card for the WVV Charging integration.
+# Adjust entity ids to match the stations you selected during setup.
+
+- type: entities
+  title: WVV Ladestation – Rüdigerstraße
+  entities:
+    - entity: sensor.wvv_energie_e_ladestation_rudigerstr_3_free_points
+      name: Freie Ladepunkte
+    - entity: sensor.wvv_energie_e_ladestation_rudigerstr_3_status
+      name: Status
+    - entity: binary_sensor.wvv_energie_e_ladestation_rudigerstr_3_any_free
+      name: Ladepunkt frei
+
+- type: map
+  title: WVV Ladestationen in der Nähe
+  entities:
+    - entity: sensor.wvv_energie_e_ladestation_rudigerstr_3_status
+    - entity: sensor.wvv_energie_ladestation_karmelitenstrasse_30_status
+  default_zoom: 13

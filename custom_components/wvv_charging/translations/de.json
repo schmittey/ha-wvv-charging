@@ -1,0 +1,90 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "WVV Ladestationen (Würzburg)",
+        "description": "Wählen Sie, wie Stationen ausgewählt werden und wie oft die Live-Daten aktualisiert werden.",
+        "data": {
+          "mode": "Stationsauswahl",
+          "update_interval": "Aktualisierungsintervall"
+        }
+      },
+      "favorites": {
+        "title": "Stationen auswählen",
+        "data": {
+          "station_ids": "Favorisierte Stationen"
+        }
+      },
+      "radius": {
+        "title": "Umkreis festlegen",
+        "description": "Alle veröffentlichten WVV-Stationen innerhalb dieser Entfernung von Ihrem Home-Assistant-Heimatort werden hinzugefügt.",
+        "data": {
+          "radius_km": "Umkreis"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Die WVV-Ladestationen-API konnte nicht erreicht werden. Bitte versuchen Sie es später erneut.",
+      "no_stations_selected": "Bitte wählen Sie mindestens eine Station aus."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "WVV Ladestationen (Würzburg)",
+        "data": {
+          "mode": "Stationsauswahl",
+          "update_interval": "Aktualisierungsintervall"
+        }
+      },
+      "favorites": {
+        "title": "Stationen auswählen",
+        "data": {
+          "station_ids": "Favorisierte Stationen"
+        }
+      },
+      "radius": {
+        "title": "Umkreis festlegen",
+        "data": {
+          "radius_km": "Umkreis"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Die WVV-Ladestationen-API konnte nicht erreicht werden. Bitte versuchen Sie es später erneut.",
+      "no_stations_selected": "Bitte wählen Sie mindestens eine Station aus."
+    }
+  },
+  "selector": {
+    "mode": {
+      "options": {
+        "favorites": "Favorisierte Stationen auswählen",
+        "radius": "Alle Stationen in einem Umkreis um das Zuhause"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "free_points": {
+        "name": "Freie Ladepunkte"
+      },
+      "status": {
+        "name": "Status",
+        "state": {
+          "available": "Verfügbar",
+          "occupied": "Belegt",
+          "out_of_order": "Außer Betrieb",
+          "unknown": "Unbekannt"
+        }
+      },
+      "distance": {
+        "name": "Entfernung von Zuhause"
+      }
+    },
+    "binary_sensor": {
+      "any_free": {
+        "name": "Ladepunkt frei"
+      }
+    }
+  }
+}
