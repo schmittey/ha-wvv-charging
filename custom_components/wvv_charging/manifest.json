@@ -1,6 +1,7 @@
 {
   "domain": "wvv_charging",
   "name": "WVV Charging (Würzburg)",
+  "categories": ["energy.ev_charging"],
   "codeowners": ["@schmittey"],
   "config_flow": true,
   "documentation": "https://github.com/schmittey/ha-wvv-charging",
