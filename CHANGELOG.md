@@ -4,9 +4,10 @@ All notable changes to this integration are documented here. Versions
 follow [Semantic Versioning](https://semver.org/) and correspond to
 GitHub Releases, which is what HACS checks to offer updates.
 
-## [1.0.0] - 2026-10-29
+## [0.1.0] - 2026-10-29
 
-Initial release.
+Initial release. Pre-1.0 while the integration is still shaking out bugs
+found during early testing — expect frequent patch releases.
 
 - Config flow (favourite stations, or all stations within a radius of
   home); configurable update interval.
