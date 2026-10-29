@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import re
 from dataclasses import dataclass, field
 from math import asin, cos, radians, sin, sqrt
 from typing import Any
@@ -33,6 +34,18 @@ from .const import (
 )
 
 _LOGGER = logging.getLogger(__name__)
+
+_HTML_TAG_RE = re.compile(r"<[^>]*>")
+
+
+def _clean_text(value: str | None) -> str | None:
+    """Strip stray HTML tags (seen in a handful of WVV station names/
+    descriptions, e.g. "WVV Energie <br> E-Ladestation") and normalize
+    whitespace."""
+    if not value:
+        return None
+    cleaned = " ".join(_HTML_TAG_RE.sub(" ", value).split())
+    return cleaned or None
 
 EARTH_RADIUS_KM = 6371.0
 
@@ -205,8 +218,8 @@ def _parse_station(raw: dict[str, Any], index: int) -> Station:
 
     return Station(
         station_id=_station_id_for(raw, index),
-        name=raw.get("name") or "WVV Ladestation",
-        description=raw.get("description"),
+        name=_clean_text(raw.get("name")) or "WVV Ladestation",
+        description=_clean_text(raw.get("description")),
         street=address.get("street"),
         zip_code=address.get("zipCode"),
         city=address.get("city"),

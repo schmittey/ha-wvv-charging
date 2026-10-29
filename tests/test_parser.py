@@ -100,6 +100,25 @@ def test_station_id_fallback_without_evse_id() -> None:
     assert station_id == "geo:49.775997:9.938008"
 
 
+def test_html_tags_are_stripped_from_name_and_description() -> None:
+    # WVV's own data occasionally contains stray HTML, e.g.
+    # "WVV Energie <br> E-Ladestation". Make sure it never leaks through,
+    # since name/description can end up as a fallback display name.
+    raw_place = {
+        "name": "WVV Energie <br> E-Ladestation",
+        "description": "Parkplatz <b>3</b>  (hinten)",
+        "circuits": [],
+        "lat": 49.79,
+        "lon": 9.93,
+        "published": True,
+        "address": {},
+        "hours": {},
+    }
+    station = api._parse_station(raw_place, index=0)
+    assert station.name == "WVV Energie E-Ladestation"
+    assert station.description == "Parkplatz 3 (hinten)"
+
+
 def test_distance_km_is_reasonable() -> None:
     stations = api.parse_charging_response(_load_sample())
     station = next(s for s in stations if s.street == "Rüdigerstr. 3")
