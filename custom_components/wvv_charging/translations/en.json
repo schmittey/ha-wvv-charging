@@ -82,8 +82,8 @@
       }
     },
     "binary_sensor": {
-      "any_free": {
-        "name": "Point free"
+      "full": {
+        "name": "Fully occupied"
       }
     }
   }

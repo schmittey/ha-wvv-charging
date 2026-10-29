@@ -1,16 +1,17 @@
 # Example automation: notify your phone as soon as a chosen WVV charging
 # station has a free charge point.
 #
-# Replace the entity_id with the "any free" binary sensor of the station
-# you care about (it's created automatically for every station you select
-# during setup).
+# Replace the entity_id with the "fully occupied" binary sensor of the
+# station you care about (it's created automatically for every station you
+# select during setup). It's "on" when the station is full, so a point
+# freeing up is the "off" transition.
 
 alias: "Notify me when WVV station is free"
 description: "Sends a mobile notification when a charge point becomes free."
 trigger:
   - platform: state
     entity_id: binary_sensor.wvv_energie_e_ladestation_rudigerstr_3_any_free
-    to: "on"
+    to: "off"
 condition: []
 action:
   - service: notify.mobile_app_your_phone

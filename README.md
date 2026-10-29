@@ -44,12 +44,13 @@ instead of guessing a price.
     / `unknown`
   - `sensor.<station>_distance` – distance from your HA home location in
     km (disabled by default, enable it per-entity if you want it)
-  - `binary_sensor.<station>_any_free` – **on** when at least one charge
-    point is free (handy for automations)
+  - `binary_sensor.<station>_any_free` – **on** when the station is fully
+    occupied, **off** while at least one charge point is free (handy for
+    automations). Uses `device_class: problem`, so its EV-plug icon is
+    colored green while free and red while full everywhere it's shown,
+    including on a Home Assistant **Map** card
   - `latitude` / `longitude` attributes on every entity, so stations can
-    be plotted on a Home Assistant **Map** card — there, each station
-    shows as a small green (free) or red (no free point) marker instead
-    of a generic icon
+    be plotted on a Map card at all
 - A single shared HTTP request per update cycle (not one per station)
 - Graceful handling of WVV/API outages: entities become `unavailable`,
   and Home Assistant's coordinator logging avoids repeated log spam

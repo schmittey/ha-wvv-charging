@@ -16,5 +16,8 @@ found during early testing — expect frequent patch releases.
   - `sensor.<station>_status`
   - `sensor.<station>_distance` (disabled by default)
   - `binary_sensor.<station>_any_free`
-- Colored (green/red) map markers reflecting free/occupied state.
+- `binary_sensor.<station>_any_free` colors its own EV-plug icon green
+  (free) / red (full) via `device_class: problem`, so map markers and
+  dashboards show a proper colored MDI icon instead of a generic one or
+  a custom image.
 - German and English translations.

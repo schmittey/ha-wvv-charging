@@ -3,7 +3,10 @@ from __future__ import annotations
 
 from typing import Any
 
-from homeassistant.components.binary_sensor import BinarySensorEntity
+from homeassistant.components.binary_sensor import (
+    BinarySensorDeviceClass,
+    BinarySensorEntity,
+)
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -23,16 +26,22 @@ async def async_setup_entry(
     station_names: dict[str, str] = data["station_names"]
 
     async_add_entities(
-        WvvAnyFreeBinarySensor(coordinator, station_id, station_names.get(station_id, station_id))
+        WvvFullBinarySensor(coordinator, station_id, station_names.get(station_id, station_id))
         for station_id in station_ids
     )
 
 
-class WvvAnyFreeBinarySensor(WvvStationEntity, BinarySensorEntity):
-    """On when at least one charge point at the station is free."""
+class WvvFullBinarySensor(WvvStationEntity, BinarySensorEntity):
+    """On when the station has no free charge points left.
 
-    _attr_translation_key = "any_free"
+    Uses device_class PROBLEM so Home Assistant colors the (custom) EV plug
+    icon itself red while full and green once a point frees up again,
+    instead of relying on a static/generic icon or a custom image.
+    """
+
+    _attr_translation_key = "full"
     _attr_icon = "mdi:ev-plug-type2"
+    _attr_device_class = BinarySensorDeviceClass.PROBLEM
 
     def __init__(self, coordinator: WvvChargingCoordinator, station_id: str, device_name: str) -> None:
         super().__init__(coordinator, station_id, device_name)
@@ -43,7 +52,7 @@ class WvvAnyFreeBinarySensor(WvvStationEntity, BinarySensorEntity):
         station = self._station
         if station is None:
             return None
-        return station.any_free
+        return not station.any_free
 
     @property
     def extra_state_attributes(self) -> dict[str, Any] | None:

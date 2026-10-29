@@ -82,8 +82,8 @@
       }
     },
     "binary_sensor": {
-      "any_free": {
-        "name": "Ladepunkt frei"
+      "full": {
+        "name": "Komplett belegt"
       }
     }
   }

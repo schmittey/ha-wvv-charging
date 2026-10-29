@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 from typing import Any
-from urllib.parse import quote
 
 from homeassistant.components.sensor import (
     SensorDeviceClass,
@@ -33,25 +32,6 @@ from .const import (
     STATION_STATUS_OPTIONS,
 )
 from .coordinator import WvvChargingCoordinator
-
-MARKER_COLOR_FREE = "#2e7d32"
-MARKER_COLOR_OCCUPIED = "#c62828"
-
-
-def marker_data_uri(free: bool) -> str:
-    """Build a small colored map-marker icon: green when free, red otherwise.
-
-    Returned as an entity_picture so the Map card renders this instead of
-    falling back to a text abbreviation of the entity/device name.
-    """
-    color = MARKER_COLOR_FREE if free else MARKER_COLOR_OCCUPIED
-    svg = (
-        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48">'
-        f'<circle cx="12" cy="12" r="11" fill="{color}" stroke="white" stroke-width="1.5"/>'
-        '<path d="M8 2v9h2.5v8L17 10h-3l3-8H8z" fill="white"/>'
-        "</svg>"
-    )
-    return "data:image/svg+xml;utf8," + quote(svg)
 
 
 async def async_setup_entry(
@@ -102,13 +82,6 @@ class WvvStationEntity(CoordinatorEntity[WvvChargingCoordinator]):
             model=model,
             configuration_url="https://www.wvv.de/elektromobilitaet/laden-in-wuerzburg/",
         )
-
-    @property
-    def entity_picture(self) -> str | None:
-        station = self._station
-        if station is None:
-            return None
-        return marker_data_uri(station.any_free)
 
     def _location_attrs(self, station: Station) -> dict[str, Any]:
         attrs: dict[str, Any] = {}

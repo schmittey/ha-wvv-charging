@@ -16,11 +16,13 @@
     - entity: sensor.rudigerstr_3_status
       name: Status
     - entity: binary_sensor.rudigerstr_3_any_free
-      name: Ladepunkt frei
+      name: Komplett belegt
 
+# The "any_free" binary sensor is used on the map because it's the one
+# with a colored icon: green while a point is free, red once it's full.
 - type: map
   title: WVV Ladestationen in der Nähe
   entities:
-    - entity: sensor.rudigerstr_3_status
-    - entity: sensor.estenfelder_strasse_37_status
+    - entity: binary_sensor.rudigerstr_3_any_free
+    - entity: binary_sensor.estenfelder_strasse_37_any_free
   default_zoom: 13
