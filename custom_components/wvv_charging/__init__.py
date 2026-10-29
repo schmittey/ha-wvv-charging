@@ -7,6 +7,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
+from homeassistant.helpers import device_registry as dr
 
 from .api import Station
 from .const import (
@@ -80,6 +81,22 @@ def _select_station_ids(hass: HomeAssistant, entry: ConfigEntry, stations: dict[
     }
 
 
+def _async_remove_stale_devices(hass: HomeAssistant, entry: ConfigEntry, station_ids: set[str]) -> None:
+    """Remove devices (and their entities) for stations no longer selected.
+
+    Switching from "radius" to "favourites" (or just picking a smaller
+    set of favourites) changes which stations this entry should expose,
+    but reloading the entry only ever creates entities for the current
+    station_ids - it never deletes devices/entities for stations that
+    dropped out, so they'd otherwise linger forever as "unavailable".
+    """
+    device_registry = dr.async_get(hass)
+    for device in dr.async_entries_for_config_entry(device_registry, entry.entry_id):
+        device_station_ids = {ident[1] for ident in device.identifiers if ident[0] == DOMAIN}
+        if device_station_ids and not device_station_ids & station_ids:
+            device_registry.async_remove_device(device.id)
+
+
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up the WVV Charging config entry."""
     update_interval = entry.data.get(CONF_UPDATE_INTERVAL, DEFAULT_UPDATE_INTERVAL)
@@ -98,6 +115,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         )
 
     station_names = _build_station_names(coordinator.data, station_ids)
+
+    _async_remove_stale_devices(hass, entry, station_ids)
 
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = {
         "coordinator": coordinator,
