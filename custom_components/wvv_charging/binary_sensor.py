@@ -20,8 +20,12 @@ async def async_setup_entry(
     data = hass.data[DOMAIN][entry.entry_id]
     coordinator: WvvChargingCoordinator = data["coordinator"]
     station_ids: set[str] = data["station_ids"]
+    station_names: dict[str, str] = data["station_names"]
 
-    async_add_entities(WvvAnyFreeBinarySensor(coordinator, station_id) for station_id in station_ids)
+    async_add_entities(
+        WvvAnyFreeBinarySensor(coordinator, station_id, station_names.get(station_id, station_id))
+        for station_id in station_ids
+    )
 
 
 class WvvAnyFreeBinarySensor(WvvStationEntity, BinarySensorEntity):
@@ -30,8 +34,8 @@ class WvvAnyFreeBinarySensor(WvvStationEntity, BinarySensorEntity):
     _attr_translation_key = "any_free"
     _attr_icon = "mdi:ev-plug-type2"
 
-    def __init__(self, coordinator: WvvChargingCoordinator, station_id: str) -> None:
-        super().__init__(coordinator, station_id)
+    def __init__(self, coordinator: WvvChargingCoordinator, station_id: str, device_name: str) -> None:
+        super().__init__(coordinator, station_id, device_name)
         self._attr_unique_id = f"{station_id}_any_free"
 
     @property

@@ -30,7 +30,11 @@ instead of guessing a price.
   - every published station within a radius (km) of your Home Assistant
     home location
 - Configurable update interval (default 5 minutes, minimum 1 minute)
-- One Home Assistant **device** per charging station, with:
+- One Home Assistant **device** per charging station, named after its
+  street address (e.g. "Rüdigerstr. 3") rather than WVV's generic,
+  repeated API name ("WVV Energie E-Ladestation") — addresses that occur
+  more than once (large parking garages with several charge points) get
+  a trailing `#2`, `#3`, ... to stay unique. Each device has:
   - `sensor.<station>_free_points` – number of free charge points right
     now (state_class `measurement`, so it works in history/statistics),
     with attributes: address, max power (kW), plug types, per-connector
@@ -43,7 +47,9 @@ instead of guessing a price.
   - `binary_sensor.<station>_any_free` – **on** when at least one charge
     point is free (handy for automations)
   - `latitude` / `longitude` attributes on every entity, so stations can
-    be plotted on a Home Assistant **Map** card
+    be plotted on a Home Assistant **Map** card — there, each station
+    shows as a small green (free) or red (no free point) marker instead
+    of a generic icon
 - A single shared HTTP request per update cycle (not one per station)
 - Graceful handling of WVV/API outages: entities become `unavailable`,
   and Home Assistant's coordinator logging avoids repeated log spam

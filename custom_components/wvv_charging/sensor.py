@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from typing import Any
+from urllib.parse import quote
 
 from homeassistant.components.sensor import (
     SensorDeviceClass,
@@ -33,6 +34,25 @@ from .const import (
 )
 from .coordinator import WvvChargingCoordinator
 
+MARKER_COLOR_FREE = "#2e7d32"
+MARKER_COLOR_OCCUPIED = "#c62828"
+
+
+def marker_data_uri(free: bool) -> str:
+    """Build a small colored map-marker icon: green when free, red otherwise.
+
+    Returned as an entity_picture so the Map card renders this instead of
+    falling back to a text abbreviation of the entity/device name.
+    """
+    color = MARKER_COLOR_FREE if free else MARKER_COLOR_OCCUPIED
+    svg = (
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48">'
+        f'<circle cx="12" cy="12" r="11" fill="{color}" stroke="white" stroke-width="1.5"/>'
+        '<path d="M8 2v9h2.5v8L17 10h-3l3-8H8z" fill="white"/>'
+        "</svg>"
+    )
+    return "data:image/svg+xml;utf8," + quote(svg)
+
 
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
@@ -41,12 +61,14 @@ async def async_setup_entry(
     data = hass.data[DOMAIN][entry.entry_id]
     coordinator: WvvChargingCoordinator = data["coordinator"]
     station_ids: set[str] = data["station_ids"]
+    station_names: dict[str, str] = data["station_names"]
 
     entities: list[SensorEntity] = []
     for station_id in station_ids:
-        entities.append(WvvFreePointsSensor(coordinator, station_id))
-        entities.append(WvvStatusSensor(coordinator, station_id))
-        entities.append(WvvDistanceSensor(coordinator, station_id, hass))
+        device_name = station_names.get(station_id, station_id)
+        entities.append(WvvFreePointsSensor(coordinator, station_id, device_name))
+        entities.append(WvvStatusSensor(coordinator, station_id, device_name))
+        entities.append(WvvDistanceSensor(coordinator, station_id, device_name, hass))
 
     async_add_entities(entities)
 
@@ -56,9 +78,10 @@ class WvvStationEntity(CoordinatorEntity[WvvChargingCoordinator]):
 
     _attr_has_entity_name = True
 
-    def __init__(self, coordinator: WvvChargingCoordinator, station_id: str) -> None:
+    def __init__(self, coordinator: WvvChargingCoordinator, station_id: str, device_name: str) -> None:
         super().__init__(coordinator)
         self._station_id = station_id
+        self._device_name = device_name
 
     @property
     def _station(self) -> Station | None:
@@ -71,15 +94,21 @@ class WvvStationEntity(CoordinatorEntity[WvvChargingCoordinator]):
     @property
     def device_info(self) -> DeviceInfo:
         station = self._station
-        name = station.name if station else self._station_id
         model = ", ".join(station.plug_types) if station and station.plug_types else None
         return DeviceInfo(
             identifiers={(DOMAIN, self._station_id)},
-            name=name,
+            name=self._device_name,
             manufacturer=MANUFACTURER,
             model=model,
             configuration_url="https://www.wvv.de/elektromobilitaet/laden-in-wuerzburg/",
         )
+
+    @property
+    def entity_picture(self) -> str | None:
+        station = self._station
+        if station is None:
+            return None
+        return marker_data_uri(station.any_free)
 
     def _location_attrs(self, station: Station) -> dict[str, Any]:
         attrs: dict[str, Any] = {}
@@ -97,8 +126,8 @@ class WvvFreePointsSensor(WvvStationEntity, SensorEntity):
     _attr_native_unit_of_measurement = "points"
     _attr_icon = "mdi:ev-station"
 
-    def __init__(self, coordinator: WvvChargingCoordinator, station_id: str) -> None:
-        super().__init__(coordinator, station_id)
+    def __init__(self, coordinator: WvvChargingCoordinator, station_id: str, device_name: str) -> None:
+        super().__init__(coordinator, station_id, device_name)
         self._attr_unique_id = f"{station_id}_free_points"
 
     @property
@@ -145,8 +174,8 @@ class WvvStatusSensor(WvvStationEntity, SensorEntity):
     _attr_options = STATION_STATUS_OPTIONS
     _attr_icon = "mdi:flash"
 
-    def __init__(self, coordinator: WvvChargingCoordinator, station_id: str) -> None:
-        super().__init__(coordinator, station_id)
+    def __init__(self, coordinator: WvvChargingCoordinator, station_id: str, device_name: str) -> None:
+        super().__init__(coordinator, station_id, device_name)
         self._attr_unique_id = f"{station_id}_status"
 
     @property
@@ -172,8 +201,10 @@ class WvvDistanceSensor(WvvStationEntity, SensorEntity):
     _attr_icon = "mdi:map-marker-distance"
     _attr_entity_registry_enabled_default = False
 
-    def __init__(self, coordinator: WvvChargingCoordinator, station_id: str, hass: HomeAssistant) -> None:
-        super().__init__(coordinator, station_id)
+    def __init__(
+        self, coordinator: WvvChargingCoordinator, station_id: str, device_name: str, hass: HomeAssistant
+    ) -> None:
+        super().__init__(coordinator, station_id, device_name)
         self._attr_unique_id = f"{station_id}_distance"
         self._hass = hass
 

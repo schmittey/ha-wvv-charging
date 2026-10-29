@@ -36,13 +36,14 @@ async def _async_fetch_stations(hass: Any) -> list[Station]:
 
 def _station_options(stations: list[Station]) -> list[selector.SelectOptionDict]:
     ordered = sorted(stations, key=lambda s: (s.city or "", s.street or "", s.name))
-    return [
-        selector.SelectOptionDict(
-            value=station.station_id,
-            label=f"{station.name} – {station.address}".strip(" –"),
-        )
-        for station in ordered
-    ]
+    labels: list[selector.SelectOptionDict] = []
+    for station in ordered:
+        label = station.address or station.name
+        description = (station.description or "").strip().rstrip(".")
+        if description and len(description) <= 40:
+            label = f"{label} ({description})"
+        labels.append(selector.SelectOptionDict(value=station.station_id, label=label))
+    return labels
 
 
 def _common_schema(defaults: dict[str, Any]) -> vol.Schema:

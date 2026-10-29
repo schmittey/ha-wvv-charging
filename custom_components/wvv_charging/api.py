@@ -73,6 +73,7 @@ class Station:
 
     station_id: str
     name: str
+    description: str | None
     street: str | None
     zip_code: str | None
     city: str | None
@@ -87,6 +88,17 @@ class Station:
     def address(self) -> str:
         parts = [p for p in (self.street, f"{self.zip_code} {self.city}".strip()) if p]
         return ", ".join(parts)
+
+    @property
+    def display_name(self) -> str:
+        """A human-findable name built from the address, e.g. "Rüdigerstr. 3".
+
+        The API's own "name" field is almost always the generic
+        "WVV Energie E-Ladestation" for every station, so it's useless for
+        telling stations apart. The street is what people actually look
+        for when they want a specific charger.
+        """
+        return self.street or self.city or self.name
 
     @property
     def total_points(self) -> int:
@@ -194,6 +206,7 @@ def _parse_station(raw: dict[str, Any], index: int) -> Station:
     return Station(
         station_id=_station_id_for(raw, index),
         name=raw.get("name") or "WVV Ladestation",
+        description=raw.get("description"),
         street=address.get("street"),
         zip_code=address.get("zipCode"),
         city=address.get("city"),

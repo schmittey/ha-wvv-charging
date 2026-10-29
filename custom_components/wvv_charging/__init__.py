@@ -25,6 +25,43 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS: list[Platform] = [Platform.SENSOR, Platform.BINARY_SENSOR]
 
 
+def _build_station_names(stations: dict[str, Station], station_ids: set[str]) -> dict[str, str]:
+    """Build a unique, address-based display name per station.
+
+    The API's own "name" field is almost always the generic "WVV Energie
+    E-Ladestation" for every station, which makes it impossible to tell
+    them apart in the UI. The street address is what people actually look
+    for, so that's used instead - falling back to the station's short
+    description (e.g. a parking space code) to disambiguate the handful of
+    stations that share the exact same street address.
+    """
+    base_names: dict[str, str] = {}
+    for station_id in station_ids:
+        station = stations.get(station_id)
+        if station is None:
+            continue
+        name = station.display_name
+        description = (station.description or "").strip().rstrip(".")
+        if description and len(description) <= 24:
+            name = f"{name} ({description})"
+        base_names[station_id] = name
+
+    ordered = sorted(base_names.items())
+    counts: dict[str, int] = {}
+    for _, name in ordered:
+        counts[name] = counts.get(name, 0) + 1
+
+    seen: dict[str, int] = {}
+    final_names: dict[str, str] = {}
+    for station_id, name in ordered:
+        if counts[name] > 1:
+            seen[name] = seen.get(name, 0) + 1
+            final_names[station_id] = f"{name} #{seen[name]}"
+        else:
+            final_names[station_id] = name
+    return final_names
+
+
 def _select_station_ids(hass: HomeAssistant, entry: ConfigEntry, stations: dict[str, Station]) -> set[str]:
     """Resolve the set of station ids this config entry should expose."""
     if entry.data.get(CONF_MODE) == MODE_FAVORITES:
@@ -60,9 +97,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             "(check your favourite stations or radius setting)"
         )
 
+    station_names = _build_station_names(coordinator.data, station_ids)
+
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = {
         "coordinator": coordinator,
         "station_ids": station_ids,
+        "station_names": station_names,
     }
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
