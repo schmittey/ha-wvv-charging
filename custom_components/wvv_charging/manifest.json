@@ -4,9 +4,9 @@
   "codeowners": ["@schmittey"],
   "config_flow": true,
   "documentation": "https://github.com/schmittey/ha-wvv-charging",
-  "issue_tracker": "https://github.com/schmittey/ha-wvv-charging/issues",
-  "iot_class": "cloud_polling",
   "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/schmittey/ha-wvv-charging/issues",
   "requirements": [],
   "version": "0.1.0"
 }
